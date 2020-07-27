@@ -1,0 +1,10 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.network "forwarded_port", guest: 22, host: 2222
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update;
+	apt-get install -y python3;
+	sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 90;
+  SHELL
+  config.vm.post_up_message = "Machine ready, use `vagrant ssh` to connect to it."
+end
