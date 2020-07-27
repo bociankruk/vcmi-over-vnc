@@ -1,0 +1,4 @@
+h3_user: h3
+h3_local_gog_install_file: /mnt/c/Download/setup_homm_3_complete_4.0.exe
+h3_remote_dir: /data/homm3
+h3_remote_gog_install_file: "{{ h3_remote_dir }}/{{ h3_local_gog_install_file | basename }}"

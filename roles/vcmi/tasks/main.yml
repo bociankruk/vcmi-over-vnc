@@ -1,0 +1,43 @@
+---
+
+- name: Add required repositories
+  apt_repository:
+    repo: "{{ item }}"
+  with_items:
+    - ppa:vcmi/ppa
+
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - gnome-core
+    - vnc4server
+    - innoextract
+    - vcmi
+
+- name: Create user
+  user:
+    name: "{{ h3_user }}"
+
+- name: Check if H3 is already installed
+  stat:
+    path: "/home/{{ h3_user }}/.local/share/vcmi/"
+  register: h3_path
+
+- name: Copy and install H3
+  block:
+  - name: Create directory for H3
+    file:
+      path: "{{ h3_remote_dir }}"
+      state: directory
+      mode: 0755
+  - name: Copy H3 GOG installer
+    synchronize:
+      src: "{{ h3_local_gog_install_file }}"
+      dest: "{{ h3_remote_gog_install_file }}"
+  - name: Install H3
+    command: /usr/games/vcmibuilder --gog {{ h3_remote_gog_install_file }}
+    args:
+      chdir: "/home/{{ h3_user }}"
+    become_user: "{{ h3_user }}"
+  when: not h3_path.stat.exists
