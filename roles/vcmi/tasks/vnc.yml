@@ -3,13 +3,15 @@
 - name: Create vnc directory
   file:
     path: "/home/{{ h3_user }}/.vnc"
-    state: direcotry
+    mode: 750
+    owner: "{{ h3_user }}"
+    state: directory
     
 - name: Create xstartup file
   template:
     src: xstartup.j2
     dest: "/home/{{ h3_user }}/.vnc/xstartup"
-    mode: 755
+    mode: 750
     owner: "{{ h3_user }}"
     
 - name: Configure vncserver service

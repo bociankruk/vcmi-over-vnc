@@ -7,7 +7,7 @@ Type=forking
 User={{ h3_user }}
 ExecStartPre=-/usr/bin/vncserver -kill :1 &> /dev/null
 ExecStart=/usr/bin/vncserver -depth {{ vnc_depth }} -geometry {{ vnc_geometry }} :1 -httpport {{ vnc_port }}
-PIDFile=/home/linuxconfig/.vnc/%H:1.pid
+PIDFile=/home/{{ h3_user }}/.vnc/%H:1.pid
 ExecStop=/usr/bin/vncserver -kill :1
 
 [Install]
