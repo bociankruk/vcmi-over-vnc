@@ -1,0 +1,25 @@
+---
+
+- name: Create vnc directory
+  file:
+    path: "/home/{{ h3_user }}/.vnc"
+    state: direcotry
+    
+- name: Create xstartup file
+  template:
+    src: xstartup.j2
+    dest: "/home/{{ h3_user }}/.vnc/xstartup"
+    mode: 755
+    owner: "{{ h3_user }}"
+    
+- name: Configure vncserver service
+  template:
+    src: vncserver.service.j2
+    dest: /etc/systemd/system/vncserver.service
+    
+- name: Enable vncserver service
+  systemd:
+    name: vncserver
+    state: started
+    daemon_reload: yes
+    enabled: yes
