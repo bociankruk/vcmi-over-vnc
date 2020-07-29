@@ -8,3 +8,20 @@ h3_remote_gog_install_file: "{{ h3_remote_dir }}/{{ h3_local_gog_install_file | 
 vnc_geometry: "800x600"
 vnc_depth: "24"
 vnc_port: "15914"
+
+packages:
+  - gnome-core
+  - gnome-panel
+  - gnome-settings-daemon
+  - metacity
+  - nautilus
+  - gnome-terminal
+  - vnc4server
+  - innoextract
+  - vcmi
+
+symlinks:
+  - src: /usr/lib/x86_64-linux-gnu/vcmi/libvcmi.so
+    dest: /usr/lib/libvcmi.so
+  - src: /usr/lib/x86_64-linux-gnu/vcmi/libminizip.so
+    dest: /usr/lib/libminizip.so

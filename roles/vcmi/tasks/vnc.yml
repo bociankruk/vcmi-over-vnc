@@ -11,17 +11,14 @@
   template:
     src: xstartup.j2
     dest: "/home/{{ h3_user }}/.vnc/xstartup"
-    mode: 750
+    mode: 0750
     owner: "{{ h3_user }}"
+  notify:
+    - restart vncserver
     
 - name: Configure vncserver service
   template:
     src: vncserver.service.j2
     dest: /etc/systemd/system/vncserver.service
-    
-- name: Enable vncserver service
-  systemd:
-    name: vncserver
-    state: started
-    daemon_reload: yes
-    enabled: yes
+  notify:
+    - restart vncserver

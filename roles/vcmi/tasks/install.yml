@@ -6,20 +6,24 @@
 
 - name: Install required packages
   apt:
-    name:
-    - gnome-core
-    - vnc4server
-    - innoextract
-    - vcmi 
+    name: "{{ packages }}"
 
 - name: Create user
   user:
     name: "{{ h3_user }}"
+    shell: /bin/bash
 
 - name: Check if H3 is already installed
   stat:
     path: "/home/{{ h3_user }}/.local/share/vcmi/"
   register: h3_path
+
+- name: Create required symlinks
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  with_items: "{{ symlinks }}"
 
 - name: Copy and install H3
   block:

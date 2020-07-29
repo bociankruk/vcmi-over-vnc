@@ -1,0 +1,8 @@
+---
+
+- name: restart vncserver
+  systemd:
+    name: vncserver
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
